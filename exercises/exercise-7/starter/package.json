@@ -1,0 +1,14 @@
+{
+  "name": "exercise-7-code-review",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "description": "Exercise 7 — Code Review agent starter",
+  "scripts": {
+    "typecheck": "tsc --noEmit"
+  },
+  "devDependencies": {
+    "@types/node": "^22.5.0",
+    "typescript": "^5.6.0"
+  }
+}

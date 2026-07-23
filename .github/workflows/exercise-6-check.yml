@@ -1,0 +1,76 @@
+name: Exercise 6 Check
+
+on:
+  push:
+    branches: ["**"]
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: copilot-course-commit-${{ github.ref }}
+  cancel-in-progress: false
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+
+      - name: Install dependencies
+        run: |
+          cd exercises/exercise-6/starter
+          npm install
+
+      - name: Check the DELETE endpoint exists
+        run: |
+          set -e
+          f=exercises/exercise-6/starter/src/app.ts
+          if ! grep -q '"DELETE"' "$f"; then
+            echo "::error::src/app.ts does not handle the DELETE method yet."
+            exit 1
+          fi
+          if grep -q "TODO (agent): add DELETE" "$f"; then
+            echo "::error::The DELETE /tasks/:id TODO marker is still present in app.ts."
+            exit 1
+          fi
+          echo "DELETE handler found."
+
+      - name: Run test suite
+        run: |
+          cd exercises/exercise-6/starter
+          npm test
+
+      - name: Check OpenAPI documents the delete operation
+        run: |
+          set -e
+          f=exercises/exercise-6/starter/openapi.yaml
+          if ! grep -q "delete:" "$f"; then
+            echo "::error::openapi.yaml does not document the delete: operation yet."
+            exit 1
+          fi
+          echo "OpenAPI delete: operation documented."
+
+      - name: Record completion
+        run: |
+          mkdir -p .github/completion
+          touch .github/completion/exercise-6.complete
+
+      - name: Commit completion marker
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add .github/completion/exercise-6.complete
+          if git diff --staged --quiet; then
+            echo "Marker already present — nothing to commit."
+          else
+            git commit -m "chore: mark exercise 6 complete"
+            git pull --rebase origin "${GITHUB_REF_NAME}" || true
+            git push origin "HEAD:${GITHUB_REF_NAME}"
+          fi

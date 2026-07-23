@@ -1,0 +1,64 @@
+name: Exercise 2 Check
+
+on:
+  push:
+    branches: ["**"]
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: copilot-course-commit-${{ github.ref }}
+  cancel-in-progress: false
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Validate exercise 2 exercise
+        run: |
+          set -e
+          cd exercises/exercise-2
+          f=starter/csv-parser.ts
+
+          if grep -q "not implemented" "$f"; then
+            echo "::error::One or more filterCsvAttempt functions still throw 'not implemented'."
+            exit 1
+          fi
+          if grep -q "TODO" "$f"; then
+            echo "::error::csv-parser.ts still contains TODO markers."
+            exit 1
+          fi
+          for fn in filterCsvAttempt1 filterCsvAttempt2 filterCsvAttempt3; do
+            if ! grep -q "$fn" "$f"; then
+              echo "::error::Missing function $fn in csv-parser.ts."
+              exit 1
+            fi
+          done
+
+          if grep -q "_(placeholder" RESULTS.md; then
+            echo "::error::RESULTS.md still contains placeholder text. Fill in every section."
+            exit 1
+          fi
+          echo "Exercise 2 validation passed."
+
+      - name: Record completion
+        run: |
+          mkdir -p .github/completion
+          touch .github/completion/exercise-2.complete
+
+      - name: Commit completion marker
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add .github/completion/exercise-2.complete
+          if git diff --staged --quiet; then
+            echo "Marker already present — nothing to commit."
+          else
+            git commit -m "chore: mark exercise 2 complete"
+            git pull --rebase origin "${GITHUB_REF_NAME}" || true
+            git push origin "HEAD:${GITHUB_REF_NAME}"
+          fi

@@ -1,0 +1,15 @@
+{
+  "name": "github-copilot-map-course",
+  "version": "1.0.0",
+  "private": true,
+  "workspaces": [
+    "exercises/exercise-1/starter",
+    "exercises/exercise-3/starter",
+    "exercises/exercise-4/starter",
+    "exercises/exercise-6/starter",
+    "exercises/exercise-7/starter"
+  ],
+  "scripts": {
+    "install:playwright": "npm run test:install --workspace=exercises/exercise-3/starter"
+  }
+}

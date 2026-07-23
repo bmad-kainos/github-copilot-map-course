@@ -1,0 +1,64 @@
+name: Award Completion Badge
+
+on:
+  push:
+    branches: ["**"]
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: copilot-course-commit-${{ github.ref }}
+  cancel-in-progress: false
+
+jobs:
+  award:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Check whether all exercises are complete
+        id: gate
+        run: |
+          all=true
+          for n in 1 2 3 4 5 6 7; do
+            if [ ! -f ".github/completion/exercise-$n.complete" ]; then
+              echo "Exercise $n not complete yet."
+              all=false
+            fi
+          done
+          echo "all_complete=$all" >> "$GITHUB_OUTPUT"
+
+      - name: Update README badge
+        if: steps.gate.outputs.all_complete == 'true'
+        run: |
+          node -e '
+            const fs = require("fs");
+            const path = "README.md";
+            let s = fs.readFileSync(path, "utf8");
+            const badge = "![Course Complete](https://img.shields.io/badge/GitHub%20Copilot%20MAP%20Course-Complete%20%E2%9C%93-brightgreen?style=for-the-badge&logo=github)";
+            const re = /<!-- COMPLETION_BADGE_PLACEHOLDER -->[\s\S]*?<!-- END_COMPLETION_BADGE -->/;
+            const replacement = "<!-- COMPLETION_BADGE_PLACEHOLDER -->\n" + badge + "\n<!-- END_COMPLETION_BADGE -->";
+            if (!re.test(s)) {
+              console.error("Badge markers not found in README.md");
+              process.exit(1);
+            }
+            s = s.replace(re, replacement);
+            fs.writeFileSync(path, s);
+            console.log("README badge updated to Complete.");
+          '
+
+      - name: Commit updated README
+        if: steps.gate.outputs.all_complete == 'true'
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add README.md
+          if git diff --staged --quiet; then
+            echo "README already up to date — nothing to commit."
+          else
+            git commit -m "chore: award course completion badge 🎉"
+            git pull --rebase origin "${GITHUB_REF_NAME}" || true
+            git push origin "HEAD:${GITHUB_REF_NAME}"
+          fi

@@ -1,0 +1,53 @@
+name: Exercise 5 Check
+
+on:
+  push:
+    branches: ["**"]
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: copilot-course-commit-${{ github.ref }}
+  cancel-in-progress: false
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Validate exercise 5 exercise
+        run: |
+          set -e
+          f=.github/copilot-instructions.md
+          if [ ! -f "$f" ]; then
+            echo "::error::Create .github/copilot-instructions.md (without the .example suffix)."
+            exit 1
+          fi
+          count=$(grep -cE '^[[:space:]]*[-*][[:space:]]+' "$f" || true)
+          echo "Found $count instruction bullet(s)."
+          if [ "${count:-0}" -lt 3 ]; then
+            echo "::error::copilot-instructions.md must contain at least 3 distinct instruction bullets."
+            exit 1
+          fi
+          echo "Exercise 5 validation passed."
+
+      - name: Record completion
+        run: |
+          mkdir -p .github/completion
+          touch .github/completion/exercise-5.complete
+
+      - name: Commit completion marker
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add .github/completion/exercise-5.complete
+          if git diff --staged --quiet; then
+            echo "Marker already present — nothing to commit."
+          else
+            git commit -m "chore: mark exercise 5 complete"
+            git pull --rebase origin "${GITHUB_REF_NAME}" || true
+            git push origin "HEAD:${GITHUB_REF_NAME}"
+          fi

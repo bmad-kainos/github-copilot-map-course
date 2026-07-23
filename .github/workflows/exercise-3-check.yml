@@ -1,0 +1,65 @@
+name: Exercise 3 Check
+
+on:
+  push:
+    branches: ["**"]
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: copilot-course-commit-${{ github.ref }}
+  cancel-in-progress: false
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Validate exercise 3 exercise
+        run: |
+          set -e
+          cd exercises/exercise-3
+          page=starter/pages/LoginPage.ts
+          spec=starter/tests/login.spec.ts
+
+          for f in "$page" "$spec"; do
+            if [ ! -f "$f" ]; then
+              echo "::error::Missing $f."
+              exit 1
+            fi
+            if grep -q "not implemented" "$f"; then
+              echo "::error::$f still throws 'not implemented' — complete the Playwright code."
+              exit 1
+            fi
+            if grep -q "TODO" "$f"; then
+              echo "::error::$f still contains TODO markers."
+              exit 1
+            fi
+          done
+
+          if grep -q "_(placeholder" RESULTS.md; then
+            echo "::error::RESULTS.md still contains placeholder text. Record all three model runs and a verdict."
+            exit 1
+          fi
+          echo "Exercise 3 validation passed."
+
+      - name: Record completion
+        run: |
+          mkdir -p .github/completion
+          touch .github/completion/exercise-3.complete
+
+      - name: Commit completion marker
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add .github/completion/exercise-3.complete
+          if git diff --staged --quiet; then
+            echo "Marker already present — nothing to commit."
+          else
+            git commit -m "chore: mark exercise 3 complete"
+            git pull --rebase origin "${GITHUB_REF_NAME}" || true
+            git push origin "HEAD:${GITHUB_REF_NAME}"
+          fi

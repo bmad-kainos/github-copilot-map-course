@@ -1,0 +1,57 @@
+openapi: 3.0.3
+info:
+  title: Tasks API
+  version: 1.0.0
+  description: >
+    Minimal task API for Exercise 6. The agent extends this document when it
+    adds the DELETE /tasks/{id} operation.
+paths:
+  /tasks:
+    get:
+      summary: List all tasks
+      responses:
+        "200":
+          description: An array of tasks
+    post:
+      summary: Create a task
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [title]
+              properties:
+                title:
+                  type: string
+      responses:
+        "201":
+          description: The created task
+        "400":
+          description: Missing or invalid title
+  /tasks/{id}:
+    get:
+      summary: Fetch a single task
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        "200":
+          description: The task
+        "404":
+          description: Task not found
+    # TODO (agent): document the DELETE /tasks/{id} operation here.
+components:
+  schemas:
+    Task:
+      type: object
+      properties:
+        id:
+          type: integer
+        title:
+          type: string
+        done:
+          type: boolean

@@ -1,0 +1,3 @@
+# Module completion markers are written here by the module-N-check workflows.
+# Each successful module check commits a `module-N.complete` file.
+# When all six exist, award-badge.yml updates the README completion badge.

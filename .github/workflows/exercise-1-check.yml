@@ -1,0 +1,57 @@
+name: Exercise 1 Check
+
+on:
+  push:
+    branches: ["**"]
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: copilot-course-commit-${{ github.ref }}
+  cancel-in-progress: false
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+
+      - name: Validate exercise 1 exercise
+        run: |
+          set -e
+          cd exercises/exercise-1/starter
+          if grep -q "not implemented" utils.ts; then
+            echo "::error::utils.ts still throws 'not implemented' — finish the functions."
+            exit 1
+          fi
+          if grep -q "TODO" utils.ts; then
+            echo "::error::utils.ts still contains TODO markers."
+            exit 1
+          fi
+          npm install
+          npm run typecheck
+
+      - name: Record completion
+        run: |
+          mkdir -p .github/completion
+          touch .github/completion/exercise-1.complete
+
+      - name: Commit completion marker
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add .github/completion/exercise-1.complete
+          if git diff --staged --quiet; then
+            echo "Marker already present — nothing to commit."
+          else
+            git commit -m "chore: mark exercise 1 complete"
+            git pull --rebase origin "${GITHUB_REF_NAME}" || true
+            git push origin "HEAD:${GITHUB_REF_NAME}"
+          fi

@@ -1,0 +1,69 @@
+name: Exercise 4 Check
+
+on:
+  push:
+    branches: ["**"]
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: copilot-course-commit-${{ github.ref }}
+  cancel-in-progress: false
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+
+      - name: Install dependencies
+        run: |
+          cd exercises/exercise-4/starter
+          npm install
+
+      - name: Run test suite
+        run: |
+          cd exercises/exercise-4/starter
+          npm test
+
+      - name: Check completeTask has a JSDoc comment
+        run: |
+          node -e '
+            const fs = require("fs");
+            const s = fs.readFileSync("exercises/exercise-4/starter/src/api.ts", "utf8");
+            const idx = s.search(/completeTask\s*\(/);
+            if (idx === -1) { console.error("::error::completeTask is not implemented in api.ts."); process.exit(1); }
+            const before = s.slice(0, idx);
+            const doc = before.lastIndexOf("/**");
+            const close = before.lastIndexOf("*/");
+            if (doc === -1 || close < doc || idx - close > 400) {
+              console.error("::error::completeTask needs a JSDoc (/** ... */) comment directly above it.");
+              process.exit(1);
+            }
+            console.log("completeTask has a JSDoc comment.");
+          '
+
+      - name: Record completion
+        run: |
+          mkdir -p .github/completion
+          touch .github/completion/exercise-4.complete
+
+      - name: Commit completion marker
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add .github/completion/exercise-4.complete
+          if git diff --staged --quiet; then
+            echo "Marker already present — nothing to commit."
+          else
+            git commit -m "chore: mark exercise 4 complete"
+            git pull --rebase origin "${GITHUB_REF_NAME}" || true
+            git push origin "HEAD:${GITHUB_REF_NAME}"
+          fi

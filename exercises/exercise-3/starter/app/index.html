@@ -1,0 +1,58 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Sample Login — Copilot MAP Course</title>
+    <style>
+      body { font-family: system-ui, sans-serif; max-width: 22rem; margin: 4rem auto; }
+      label { display: block; margin-top: 1rem; font-weight: 600; }
+      input { width: 100%; padding: 0.5rem; margin-top: 0.25rem; }
+      button { margin-top: 1.25rem; padding: 0.6rem 1rem; cursor: pointer; }
+      .error { color: #b00020; margin-top: 1rem; }
+      .welcome { color: #006644; margin-top: 1rem; font-size: 1.2rem; }
+      [hidden] { display: none; }
+    </style>
+  </head>
+  <body>
+    <h1>Sign in</h1>
+
+    <form id="login-form" novalidate>
+      <label for="username">Username</label>
+      <input id="username" name="username" autocomplete="username" />
+
+      <label for="password">Password</label>
+      <input id="password" name="password" type="password" autocomplete="current-password" />
+
+      <button id="login-button" type="submit">Log in</button>
+    </form>
+
+    <p id="error" class="error" role="alert" hidden>Invalid credentials</p>
+    <h2 id="welcome" class="welcome" hidden></h2>
+
+    <script>
+      // Demo-only credentials (familiar SauceDemo-style values).
+      const VALID_USER = "standard_user";
+      const VALID_PASS = "secret_sauce";
+
+      const form = document.getElementById("login-form");
+      const error = document.getElementById("error");
+      const welcome = document.getElementById("welcome");
+
+      form.addEventListener("submit", (event) => {
+        event.preventDefault();
+        const username = document.getElementById("username").value.trim();
+        const password = document.getElementById("password").value;
+
+        if (username === VALID_USER && password === VALID_PASS) {
+          welcome.textContent = `Welcome, ${username}`;
+          welcome.hidden = false;
+          error.hidden = true;
+        } else {
+          error.hidden = false;
+          welcome.hidden = true;
+        }
+      });
+    </script>
+  </body>
+</html>

@@ -1,0 +1,67 @@
+name: Exercise 7 Check
+
+on:
+  push:
+    branches: ["**"]
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: copilot-course-commit-${{ github.ref }}
+  cancel-in-progress: false
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Validate exercise 7 custom agents
+        run: |
+          set -e
+          dir=exercises/exercise-7/starter/.github/agents
+          for name in code-reviewer test-writer orchestrator; do
+            f="$dir/$name.prompt.md"
+            if [ ! -f "$f" ]; then
+              echo "::error::Missing $f."
+              exit 1
+            fi
+            if [ ! -s "$f" ]; then
+              echo "::error::$f is empty."
+              exit 1
+            fi
+            if grep -qi "TODO" "$f"; then
+              echo "::error::$f still contains TODO placeholders — complete the agent definition."
+              exit 1
+            fi
+            if ! grep -qi "role" "$f"; then
+              echo "::error::$f must include a role definition."
+              exit 1
+            fi
+            if ! grep -qi "instruction" "$f"; then
+              echo "::error::$f must include instructions."
+              exit 1
+            fi
+            echo "$f looks complete."
+          done
+          echo "Exercise 7 validation passed."
+
+      - name: Record completion
+        run: |
+          mkdir -p .github/completion
+          touch .github/completion/exercise-7.complete
+
+      - name: Commit completion marker
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add .github/completion/exercise-7.complete
+          if git diff --staged --quiet; then
+            echo "Marker already present — nothing to commit."
+          else
+            git commit -m "chore: mark exercise 7 complete"
+            git pull --rebase origin "${GITHUB_REF_NAME}" || true
+            git push origin "HEAD:${GITHUB_REF_NAME}"
+          fi
