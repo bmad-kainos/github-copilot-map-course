@@ -18,44 +18,21 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - name: Set up Node.js
-        uses: actions/setup-node@v4
-        with:
-          node-version: "20"
-
-      - name: Install dependencies
-        run: |
-          cd exercises/exercise-6/starter
-          npm install
-
-      - name: Check the DELETE endpoint exists
+      - name: Validate exercise 6 exercise
         run: |
           set -e
-          f=exercises/exercise-6/starter/src/app.ts
-          if ! grep -q '"DELETE"' "$f"; then
-            echo "::error::src/app.ts does not handle the DELETE method yet."
+          f=.github/copilot-instructions.md
+          if [ ! -f "$f" ]; then
+            echo "::error::Create .github/copilot-instructions.md (without the .example suffix)."
             exit 1
           fi
-          if grep -q "TODO (agent): add DELETE" "$f"; then
-            echo "::error::The DELETE /tasks/:id TODO marker is still present in app.ts."
+          count=$(grep -cE '^[[:space:]]*[-*][[:space:]]+' "$f" || true)
+          echo "Found $count instruction bullet(s)."
+          if [ "${count:-0}" -lt 3 ]; then
+            echo "::error::copilot-instructions.md must contain at least 3 distinct instruction bullets."
             exit 1
           fi
-          echo "DELETE handler found."
-
-      - name: Run test suite
-        run: |
-          cd exercises/exercise-6/starter
-          npm test
-
-      - name: Check OpenAPI documents the delete operation
-        run: |
-          set -e
-          f=exercises/exercise-6/starter/openapi.yaml
-          if ! grep -q "delete:" "$f"; then
-            echo "::error::openapi.yaml does not document the delete: operation yet."
-            exit 1
-          fi
-          echo "OpenAPI delete: operation documented."
+          echo "Exercise 6 validation passed."
 
       - name: Record completion
         run: |

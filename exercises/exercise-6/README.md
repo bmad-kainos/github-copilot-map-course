@@ -1,52 +1,52 @@
-# Exercise 6 — Agent Mode & Skills
+# Exercise 6 — Customisation & Context Control
 
-> **Session:** Agent Mode & Skills · **Difficulty:** 🔴 Advanced · **Time:** ~40 min
+> **Session:** Customisation & Context Control · **Difficulty:** 🟡 Intermediate · **Time:** ~30 min
 
 ## Goal
-Use **Agent Mode** to carry out a **multi-file change from a single prompt** —
-scaffolding an endpoint, testing it, and documenting it — while you supervise
-the plan and the diffs.
+Shape Copilot's behaviour with a **custom instructions file**, then feel the
+difference it makes. You'll author `.github/copilot-instructions.md` and watch
+your standards flow into every suggestion.
 
 ## What you'll work on
-`starter/` is a tiny dependency-free REST API (`src/app.ts`) with:
+`starter/src/index.ts` has a `totalPrice` helper and a `TODO` to add
+`formatCurrency(pence: number): string` returning a GBP string like `"£12.34"`.
 
-- `GET /tasks` · `POST /tasks` · `GET /tasks/:id`
-
-Your task (see **`starter/TASK.md`**): add **`DELETE /tasks/:id`**, end-to-end.
+The catch: **there are no custom instructions yet**. You'll create them.
 
 ## Steps
-1. Open `starter/` and read `TASK.md` — it's the single source of truth for the
-   agent prompt.
-2. In **Agent Mode**, give one prompt that asks the agent to:
-   - add the `DELETE /tasks/:id` handler in `src/app.ts` (`204` on success,
-     `404` when missing);
-   - add tests in `tests/api.test.ts`;
-   - document the operation in `openapi.yaml` (the `delete:` block);
-   - run `npm test` and iterate until green.
-3. **Review every step** — approve the plan, read each diff, don't rubber-stamp.
-4. Confirm `npm test` passes and the OpenAPI file documents the new route.
+1. **Look, don't copy** — an example lives at
+   `.github/copilot-instructions.example.md` in the repo root. Read it for
+   inspiration only.
+2. **Create the real file** — add `.github/copilot-instructions.md` at the repo
+   root with *your* coding standards (naming, error handling, comment style,
+   currency formatting conventions, etc.).
+3. **Feel the effect** — implement `formatCurrency` with Copilot and notice how
+   your instructions steer the result.
+4. Type-check with `npm run typecheck` (or run the file with `npm start`).
+
+> The automated check looks for a real `.github/copilot-instructions.md` — the
+> `.example.md` file does **not** count, so the exercise stays genuine.
 
 ## Copilot features practised
-- **Agent Mode** — autonomous, multi-step, multi-file edits
-- Supervising an agent: plans, diffs, tool calls
-- **Skills**/tools the agent uses to run tests and edit files
+- **`.github/copilot-instructions.md`** custom instructions
+- **Context control** — steering suggestions with repo-level guidance
+- Attaching and referencing context in chat
 
 ## Recommended model
-A 🔴 **Reasoning / Advanced** model is the right call — the agent must plan
-across several files and keep them consistent.
+A 🟡 **Balanced** model is plenty. This exercise is about *context*, not raw
+model power.
 
 ## Tips (not answers)
-- Put the acceptance criteria in the prompt (status codes, files to touch,
-  "run the tests"). Agents deliver what you *specify*.
-- Let the agent run the tests itself and self-correct — that's the point of
-  agent mode.
-- Still your code: read the diff before accepting. You own what you merge.
+- Be specific and prescriptive: "always X", "never Y". Vague instructions
+  produce vague effects.
+- Instructions are living docs — tweak them, re-prompt, and watch suggestions
+  shift.
+- Keep them short and high-signal; a wall of text dilutes the guidance.
 
 ## Definition of done
-- `src/app.ts` handles `DELETE /tasks/:id` (204 / 404).
-- `tests/api.test.ts` covers delete-existing and delete-unknown; `npm test`
-  passes.
-- `openapi.yaml` documents the `delete:` operation under `/tasks/{id}`.
+- `.github/copilot-instructions.md` exists at the repo root and reflects real,
+  specific standards.
+- `formatCurrency` is implemented and type-checks.
 
 ---
 Works identically in a **GitHub Codespace** or **locally in VS Code**.

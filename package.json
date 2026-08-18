@@ -8,9 +8,10 @@
     "exercises/exercise-4/starter",
     "exercises/exercise-5/starter",
     "exercises/exercise-6/starter",
-    "exercises/exercise-7/starter"
+    "exercises/exercise-7/starter",
+    "exercises/exercise-8/starter"
   ],
   "scripts": {
-    "install:playwright": "npm run test:install --workspace=exercises/exercise-3/starter"
+    "install:playwright": "npm run test:install --workspace=exercises/exercise-3/starter && npm run test:install --workspace=exercises/exercise-5/starter"
   }
 }

@@ -6,6 +6,7 @@
   "description": "Exercise 4 \u2014 TDD workflow starter (in-memory Task API)",
   "scripts": {
     "test": "node --import tsx --test tests/api.test.ts",
+    "summary": "node --import tsx scripts/run-summary.ts",
     "typecheck": "tsc --noEmit"
   },
   "devDependencies": {

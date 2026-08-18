@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8" />
+  <title>Kainos Shop — Sample Page</title>
+  <style>
+    /* Deliberately low-contrast text: fails WCAG AA (ratio ~2.7:1) */
+    body { font-family: sans-serif; background: #ffffff; color: #aaaaaa; }
+
+    /* No visible focus ring — keyboard users cannot track focus */
+    *:focus { outline: none; }
+
+    nav { background: #0066cc; padding: 10px; }
+    nav a { color: #0066cc; text-decoration: none; margin: 0 8px; } /* same colour as bg — invisible */
+
+    main { max-width: 800px; margin: 0 auto; padding: 20px; }
+
+    .product-card { border: 1px solid #ccc; padding: 16px; margin-bottom: 16px; }
+    .product-card img { width: 120px; height: 120px; } /* no alt attribute */
+
+    .badge { background: #ff0000; color: #ff3333; padding: 2px 6px; border-radius: 3px; } /* red on red */
+
+    footer { background: #333; color: #555; padding: 20px; } /* low contrast */
+  </style>
+</head>
+<body>
+
+  <!-- Missing skip-navigation link -->
+
+  <!-- Missing role="banner" / <header> landmark -->
+  <div id="top-bar">
+    <nav>
+      <!-- Links have no discernible text — only icon characters, no aria-label -->
+      <a href="/">&#9776;</a>
+      <a href="/cart">&#128722;</a>
+      <a href="/account">&#128100;</a>
+    </nav>
+  </div>
+
+  <main>
+    <!-- Missing <h1> — page has no top-level heading -->
+
+    <section>
+      <!-- <section> has no accessible name (no aria-labelledby / aria-label) -->
+      <h2>Featured products</h2>
+
+      <div class="product-card">
+        <!-- img missing alt attribute -->
+        <img src="product-1.jpg" />
+        <div>
+          <p>Wireless Headphones</p>
+          <!-- Colour-only indication of status — fails WCAG 1.4.1 -->
+          <span class="badge">SALE</span>
+          <p>£49.99</p>
+
+          <!-- Button is a <div>, not a <button> — not keyboard-accessible -->
+          <div onclick="addToCart(1)" style="background:#0066cc; color:#fff; padding:8px 12px; cursor:pointer; display:inline-block;">
+            Add to cart
+          </div>
+        </div>
+      </div>
+
+      <div class="product-card">
+        <!-- img missing alt attribute -->
+        <img src="product-2.jpg" />
+        <div>
+          <p>USB-C Hub</p>
+          <span class="badge">NEW</span>
+          <p>£29.99</p>
+          <div onclick="addToCart(2)" style="background:#0066cc; color:#fff; padding:8px 12px; cursor:pointer; display:inline-block;">
+            Add to cart
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <!-- Form labels are not associated with their inputs -->
+      <h2>Newsletter sign-up</h2>
+      <form>
+        <p>Email address:</p>
+        <!-- input has no id, label has no for attribute — not associated -->
+        <input type="text" placeholder="your@email.com" />
+        <p>Preferences:</p>
+        <!-- Checkboxes have no labels at all -->
+        <input type="checkbox" /> Weekly deals<br />
+        <input type="checkbox" /> New arrivals<br />
+        <!-- Submit button has no text — icon only, no aria-label -->
+        <button type="submit">&#9654;</button>
+      </form>
+    </section>
+  </main>
+
+  <!-- Missing role="contentinfo" / <footer> landmark -->
+  <div id="page-footer">
+    <footer>
+      <p>© 2024 Kainos Shop</p>
+      <!-- Redundant title attribute used as the only tooltip text — non-conformant -->
+      <a href="/privacy" title="Privacy policy">&#128274;</a>
+    </footer>
+  </div>
+
+  <script>
+    function addToCart(id) {
+      console.log('Added', id);
+    }
+  </script>
+</body>
+</html>

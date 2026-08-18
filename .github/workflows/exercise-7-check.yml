@@ -18,35 +18,44 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - name: Validate exercise 7 custom agents
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+
+      - name: Install dependencies
+        run: |
+          cd exercises/exercise-7/starter
+          npm install
+
+      - name: Check the DELETE endpoint exists
         run: |
           set -e
-          dir=exercises/exercise-7/starter/.github/agents
-          for name in code-reviewer test-writer orchestrator; do
-            f="$dir/$name.prompt.md"
-            if [ ! -f "$f" ]; then
-              echo "::error::Missing $f."
-              exit 1
-            fi
-            if [ ! -s "$f" ]; then
-              echo "::error::$f is empty."
-              exit 1
-            fi
-            if grep -qi "TODO" "$f"; then
-              echo "::error::$f still contains TODO placeholders — complete the agent definition."
-              exit 1
-            fi
-            if ! grep -qi "role" "$f"; then
-              echo "::error::$f must include a role definition."
-              exit 1
-            fi
-            if ! grep -qi "instruction" "$f"; then
-              echo "::error::$f must include instructions."
-              exit 1
-            fi
-            echo "$f looks complete."
-          done
-          echo "Exercise 7 validation passed."
+          f=exercises/exercise-7/starter/src/app.ts
+          if ! grep -q '"DELETE"' "$f"; then
+            echo "::error::src/app.ts does not handle the DELETE method yet."
+            exit 1
+          fi
+          if grep -q "TODO (agent): add DELETE" "$f"; then
+            echo "::error::The DELETE /tasks/:id TODO marker is still present in app.ts."
+            exit 1
+          fi
+          echo "DELETE handler found."
+
+      - name: Run test suite
+        run: |
+          cd exercises/exercise-7/starter
+          npm test
+
+      - name: Check OpenAPI documents the delete operation
+        run: |
+          set -e
+          f=exercises/exercise-7/starter/openapi.yaml
+          if ! grep -q "delete:" "$f"; then
+            echo "::error::openapi.yaml does not document the delete: operation yet."
+            exit 1
+          fi
+          echo "OpenAPI delete: operation documented."
 
       - name: Record completion
         run: |

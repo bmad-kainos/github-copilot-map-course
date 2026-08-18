@@ -2,7 +2,7 @@
 
 The hands-on exercise repository for the **Kainos GitHub Copilot MAP course**.
 
-Work through **7 numbered exercises** that take you from your first inline
+Work through **8 numbered exercises** that take you from your first inline
 completion all the way to orchestrating custom AI agents. Each session follows
 the **MAP** model — **M**aster (short theory) → **A**ccomplish (hands-on) →
 **P**rogress (recap + what's next) — and is roughly **70% hands-on**.
@@ -13,13 +13,14 @@ the **MAP** model — **M**aster (short theory) → **A**ccomplish (hands-on) �
 
 ---
 
-## Prerequisites
+## Before you start
 
-- A **GitHub account** (a personal account is fine — you'll fork this repo to it).
-- A **GitHub Copilot licence** (Copilot enabled on your account; some model
-  tiers depend on your org's plan — see Exercise 3).
-- **Either** a browser (for Codespaces) **or** **VS Code** locally with the
-  **GitHub Copilot** and **GitHub Copilot Chat** extensions.
+- A **GitHub account** (a personal account is fine — you will fork this repo to it).
+- A **GitHub Copilot licence** enabled on your account. Some model tiers depend
+  on your org's plan — request access via IT if you don't already have it.
+  You will explore model tiers in Exercise 3.
+- **VS Code** with the **GitHub Copilot** and **GitHub Copilot Chat** extensions
+  installed, **or** a browser — a one-click Codespace needs nothing local at all.
 
 ---
 
@@ -57,24 +58,25 @@ Every exercise works **identically** in both paths.
 5. **Follow the exercise READMEs** in order, starting with Exercise 1.
 
 > Each time you push your work, GitHub Actions checks your progress
-> automatically. When all **7** exercises pass, a completion badge is written to
+> automatically. When all **8** exercises pass, a completion badge is written to
 > the top of *your* README.
 
 ---
 
-## Course map — 7 sessions
+## Course map — 8 sessions
 
 | # | Exercise | Level | ~Time | What you'll practise |
 |---|----------|-------|-------|----------------------|
-| 1 | [Introduction & Setup](./exercises/exercise-1/README.md) | 🟢 Beginner | ~20m | Inline completions, inline chat, `/explain`, `/fix` |
+| 1 | [Your first Copilot suggestions](./exercises/exercise-1/README.md) | 🟢 Beginner | ~15m | Inline completions, alternative suggestions, `/explain`, `/fix` |
 | 2 | [Effective Prompting](./exercises/exercise-2/README.md) | 🟢 Beginner | ~25m | Prompt quality kata, iterating on output |
 | 3 | [Choosing the Right Model](./exercises/exercise-3/README.md) | 🟢 Beginner | ~30m | Model picker, tier trade-offs (Playwright bake-off) |
-| 4 | [Copilot in Your Daily Workflow](./exercises/exercise-4/README.md) | 🟡 Intermediate | ~35m | TDD with `/tests`, `/fix`, `/doc` |
-| 5 | [Customisation & Context Control](./exercises/exercise-5/README.md) | 🟡 Intermediate | ~30m | `.github/copilot-instructions.md`, context control |
-| 6 | [Agent Mode & Skills](./exercises/exercise-6/README.md) | 🔴 Advanced | ~40m | One prompt → REST endpoint + tests + OpenAPI |
-| 7 | [Subagents & Custom Agents](./exercises/exercise-7/README.md) | 🔴 Advanced | ~45m | Custom `.prompt.md` agents, orchestration |
+| 4 | [Copilot in Your Daily Workflow](./exercises/exercise-4/README.md) | 🟡 Intermediate | ~35m | TDD with `/tests`, `/fix`, `/doc`, runner script |
+| 5 | [Beyond Functional Testing](./exercises/exercise-5/README.md) | 🟡 Intermediate | ~35m | Accessibility (axe-core), performance (k6), defect reports |
+| 6 | [Customisation & Context Control](./exercises/exercise-6/README.md) | 🟡 Intermediate | ~30m | `.github/copilot-instructions.md`, context shaping |
+| 7 | [Agent Mode & Skills](./exercises/exercise-7/README.md) | 🔴 Advanced | ~40m | One prompt → REST endpoint + tests + OpenAPI |
+| 8 | [Subagents & Custom Agents](./exercises/exercise-8/README.md) | 🔴 Advanced | ~45m | Custom `.prompt.md` agents, orchestration |
 
-Difficulty ramps **3 Beginner → 2 Intermediate → 2 Advanced**.
+Difficulty ramps **3 Beginner → 3 Intermediate → 2 Advanced**.
 
 ---
 
@@ -96,7 +98,7 @@ Copilot accelerates you, but you own what you commit. Before you start, read
   validates your work on every push.
 - When an exercise passes, the workflow records a marker under
   `.github/completion/` (e.g. `exercise-3.complete`).
-- Once **all 7 markers** exist, `award-badge.yml` flips the badge at the top of
+- Once **all 8 markers** exist, `award-badge.yml` flips the badge at the top of
   this README to **Complete ✓**.
 
 Watch your checks run under the **Actions** tab of your fork.
@@ -118,12 +120,12 @@ history is the proof.
 
 ```
 exercises/
-  exercise-1/ … exercise-7/    # one folder per session, each with its own README + starter/
+  exercise-1/ … exercise-8/    # one folder per session, each with its own README + starter/
 .devcontainer/                 # Codespaces / local devcontainer (Node + Copilot)
 .vscode/extensions.json        # recommends the Copilot extensions for local VS Code
 .github/
-  workflows/                   # exercise-1..7-check.yml + award-badge.yml
-  copilot-instructions.example.md   # reference for Exercise 5 (does NOT auto-apply)
+  workflows/                   # exercise-1..8-check.yml + award-badge.yml
+  copilot-instructions.example.md   # reference for Exercise 6 (does NOT auto-apply)
   ISSUE_TEMPLATE/              # optional progress-tracking issue
 GUARDRAILS.md                  # responsible-use & security guardrails
 ```
@@ -135,7 +137,7 @@ GUARDRAILS.md                  # responsible-use & security guardrails
 
 ## Facilitator notes
 
-- Delivered live as **7 sessions** (~45–85 min each), roughly **70% hands-on /
+- Delivered live as **8 sessions** (~30–80 min each), roughly **70% hands-on /
   30% theory**, following the MAP structure.
 - Participants fork to their **personal** GitHub accounts and work at their own
   pace; a recommended cadence is ~1 week between sessions so learners use

@@ -50,6 +50,20 @@ jobs:
             console.log("completeTask has a JSDoc comment.");
           '
 
+      - name: Check runner script exists and is non-empty
+        run: |
+          set -e
+          f=exercises/exercise-4/starter/scripts/run-summary.ts
+          if [ ! -f "$f" ]; then
+            echo "::error::scripts/run-summary.ts is missing — complete Step 5."
+            exit 1
+          fi
+          if grep -q "TODO: ask Copilot" "$f"; then
+            echo "::error::scripts/run-summary.ts still has its TODO placeholder — implement the script."
+            exit 1
+          fi
+          echo "run-summary.ts found and looks implemented."
+
       - name: Record completion
         run: |
           mkdir -p .github/completion

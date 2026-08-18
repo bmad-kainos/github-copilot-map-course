@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "private": true,
   "type": "module",
-  "description": "Exercise 1 — Introduction & Setup starter",
+  "description": "Exercise 1 — Your first Copilot suggestions starter",
   "scripts": {
     "start": "tsx utils.ts",
     "typecheck": "tsc --noEmit"

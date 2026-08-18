@@ -1,16 +1,14 @@
 {
-  "name": "exercise-6-customisation",
+  "name": "exercise-8-code-review",
   "version": "1.0.0",
   "private": true,
   "type": "module",
-  "description": "Exercise 5 — Customisation & Context Control starter",
+  "description": "Exercise 8 — Subagents & Custom Agents starter",
   "scripts": {
-    "start": "tsx src/index.ts",
     "typecheck": "tsc --noEmit"
   },
   "devDependencies": {
     "@types/node": "^22.5.0",
-    "tsx": "^4.19.0",
     "typescript": "^5.6.0"
   }
 }

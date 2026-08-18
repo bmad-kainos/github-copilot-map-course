@@ -18,21 +18,53 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - name: Validate exercise 5 exercise
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+
+      - name: Install dependencies
+        run: |
+          cd exercises/exercise-5/starter
+          npm install
+
+      - name: Install Playwright browsers
+        run: |
+          cd exercises/exercise-5/starter
+          npx playwright install chromium --with-deps
+
+      - name: Run accessibility tests
+        run: |
+          cd exercises/exercise-5/starter
+          npm test
+
+      - name: Check load-test thresholds are defined
         run: |
           set -e
-          f=.github/copilot-instructions.md
+          f=exercises/exercise-5/starter/k6/load-test.js
+          if grep -q "^  // thresholds:" "$f"; then
+            echo "::error::The thresholds block in k6/load-test.js is still commented out — define your performance budget."
+            exit 1
+          fi
+          if ! grep -q "thresholds" "$f"; then
+            echo "::error::k6/load-test.js must define a thresholds block with your performance budget."
+            exit 1
+          fi
+          echo "load-test thresholds found."
+
+      - name: Check defect report exists
+        run: |
+          set -e
+          f=exercises/exercise-5/starter/DEFECT-REPORT.md
           if [ ! -f "$f" ]; then
-            echo "::error::Create .github/copilot-instructions.md (without the .example suffix)."
+            echo "::error::Create exercises/exercise-5/starter/DEFECT-REPORT.md with your defect report."
             exit 1
           fi
-          count=$(grep -cE '^[[:space:]]*[-*][[:space:]]+' "$f" || true)
-          echo "Found $count instruction bullet(s)."
-          if [ "${count:-0}" -lt 3 ]; then
-            echo "::error::copilot-instructions.md must contain at least 3 distinct instruction bullets."
+          if [ ! -s "$f" ]; then
+            echo "::error::DEFECT-REPORT.md is empty — fill it in."
             exit 1
           fi
-          echo "Exercise 5 validation passed."
+          echo "DEFECT-REPORT.md found."
 
       - name: Record completion
         run: |
