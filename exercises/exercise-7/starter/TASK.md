@@ -1,4 +1,4 @@
-# TASK — Exercise 6 (Agent Mode)
+# TASK — Exercise 7 (Agent Mode)
 
 You are working in a minimal REST task API. Complete **all** of the following
 from a **single agent prompt**, and watch the agent plan and execute each step.

@@ -13,7 +13,7 @@ Tick each exercise as the GitHub Action check goes green on your fork.
 - [ ] **Exercise 2 — Effective Prompting** 🟢 (prompt quality kata + RESULTS.md)
 - [ ] **Exercise 3 — Choosing the Right Model** 🟢 (Playwright model bake-off + RESULTS.md)
 - [ ] **Exercise 4 — Copilot in Your Daily Workflow** 🟡 (TDD with `/tests`, `/fix`, `/doc`, runner script)
-- [ ] **Exercise 5 — Beyond Functional Testing** 🟡 (axe-core accessibility + k6 performance + defect report)
+- [ ] **Exercise 5 — Beyond Functional Testing** 🟡 (axe-core accessibility + WCAG fixes + defect report)
 - [ ] **Exercise 6 — Customisation & Context Control** 🟡 (`copilot-instructions.md`)
 - [ ] **Exercise 7 — Agent Mode & Skills** 🔴 (REST endpoint + tests + OpenAPI, agent mode)
 - [ ] **Exercise 8 — Subagents & Custom Agents** 🔴 (custom `.prompt.md` agents)

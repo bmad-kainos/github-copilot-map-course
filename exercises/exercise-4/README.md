@@ -1,6 +1,6 @@
 # Exercise 4 — Copilot in Your Daily Workflow
 
-> **Session:** Copilot in Your Daily Workflow · **Difficulty:** 🟡 Intermediate · **Time:** ~35 min
+> **Session:** Copilot in Your Daily Workflow · **Difficulty:** 🟡 Intermediate · **Time:** ~40 min
 
 ## Goal
 Practise the **red → green → refactor → document** loop with Copilot as your

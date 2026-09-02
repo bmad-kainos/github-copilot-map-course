@@ -38,20 +38,6 @@ jobs:
           cd exercises/exercise-5/starter
           npm test
 
-      - name: Check load-test thresholds are defined
-        run: |
-          set -e
-          f=exercises/exercise-5/starter/k6/load-test.js
-          if grep -q "^  // thresholds:" "$f"; then
-            echo "::error::The thresholds block in k6/load-test.js is still commented out — define your performance budget."
-            exit 1
-          fi
-          if ! grep -q "thresholds" "$f"; then
-            echo "::error::k6/load-test.js must define a thresholds block with your performance budget."
-            exit 1
-          fi
-          echo "load-test thresholds found."
-
       - name: Check defect report exists
         run: |
           set -e

@@ -70,8 +70,8 @@ Every exercise works **identically** in both paths.
 | 1 | [Your first Copilot suggestions](./exercises/exercise-1/README.md) | 🟢 Beginner | ~15m | Inline completions, alternative suggestions, `/explain`, `/fix` |
 | 2 | [Effective Prompting](./exercises/exercise-2/README.md) | 🟢 Beginner | ~25m | Prompt quality kata, iterating on output |
 | 3 | [Choosing the Right Model](./exercises/exercise-3/README.md) | 🟢 Beginner | ~30m | Model picker, tier trade-offs (Playwright bake-off) |
-| 4 | [Copilot in Your Daily Workflow](./exercises/exercise-4/README.md) | 🟡 Intermediate | ~35m | TDD with `/tests`, `/fix`, `/doc`, runner script |
-| 5 | [Beyond Functional Testing](./exercises/exercise-5/README.md) | 🟡 Intermediate | ~35m | Accessibility (axe-core), performance (k6), defect reports |
+| 4 | [Copilot in Your Daily Workflow](./exercises/exercise-4/README.md) | 🟡 Intermediate | ~40m | TDD with `/tests`, `/fix`, `/doc`, runner script |
+| 5 | [Beyond Functional Testing](./exercises/exercise-5/README.md) | 🟡 Intermediate | ~30m | Accessibility (axe-core), WCAG fixes, defect report |
 | 6 | [Customisation & Context Control](./exercises/exercise-6/README.md) | 🟡 Intermediate | ~30m | `.github/copilot-instructions.md`, context shaping |
 | 7 | [Agent Mode & Skills](./exercises/exercise-7/README.md) | 🔴 Advanced | ~40m | One prompt → REST endpoint + tests + OpenAPI |
 | 8 | [Subagents & Custom Agents](./exercises/exercise-8/README.md) | 🔴 Advanced | ~45m | Custom `.prompt.md` agents, orchestration |

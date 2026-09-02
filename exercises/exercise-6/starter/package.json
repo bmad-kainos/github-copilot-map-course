@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "private": true,
   "type": "module",
-  "description": "Exercise 5 — Customisation & Context Control starter",
+  "description": "Exercise 6 — Customisation & Context Control starter",
   "scripts": {
     "start": "tsx src/index.ts",
     "typecheck": "tsc --noEmit"
