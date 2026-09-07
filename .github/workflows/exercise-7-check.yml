@@ -37,7 +37,7 @@ jobs:
             exit 1
           fi
           if grep -q "TODO (agent): add DELETE" "$f"; then
-            echo "::error::The DELETE /tasks/:id TODO marker is still present in app.ts."
+            echo "::error::The DELETE /tests/:id TODO marker is still present in app.ts."
             exit 1
           fi
           echo "DELETE handler found."

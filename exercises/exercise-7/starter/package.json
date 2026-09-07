@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "private": true,
   "type": "module",
-  "description": "Exercise 7 — Agent Mode starter (REST API + OpenAPI)",
+  "description": "Exercise 7 — Agent Mode starter (Test Case API + OpenAPI)",
   "scripts": {
     "start": "tsx src/app.ts",
     "test": "node --import tsx --test \"tests/*.test.ts\"",

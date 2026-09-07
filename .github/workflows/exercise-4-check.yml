@@ -33,21 +33,21 @@ jobs:
           cd exercises/exercise-4/starter
           npm test
 
-      - name: Check completeTask has a JSDoc comment
+      - name: Check markTestCasePassed has a JSDoc comment
         run: |
           node -e '
             const fs = require("fs");
             const s = fs.readFileSync("exercises/exercise-4/starter/src/api.ts", "utf8");
-            const idx = s.search(/completeTask\s*\(/);
-            if (idx === -1) { console.error("::error::completeTask is not implemented in api.ts."); process.exit(1); }
+            const idx = s.search(/markTestCasePassed\s*\(/);
+            if (idx === -1) { console.error("::error::markTestCasePassed is not implemented in api.ts."); process.exit(1); }
             const before = s.slice(0, idx);
             const doc = before.lastIndexOf("/**");
             const close = before.lastIndexOf("*/");
             if (doc === -1 || close < doc || idx - close > 400) {
-              console.error("::error::completeTask needs a JSDoc (/** ... */) comment directly above it.");
+              console.error("::error::markTestCasePassed needs a JSDoc (/** ... */) comment directly above it.");
               process.exit(1);
             }
-            console.log("completeTask has a JSDoc comment.");
+            console.log("markTestCasePassed has a JSDoc comment.");
           '
 
       - name: Check runner script exists and is non-empty

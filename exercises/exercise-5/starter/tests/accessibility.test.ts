@@ -31,6 +31,7 @@ test('page has no critical or serious axe violations', async () => {
     await page.goto(pageUrl);
 
     const results = await new AxeBuilder({ page })
+      .setLegacyMode()
       .withTags(['wcag2a', 'wcag2aa'])
       .analyze();
 
@@ -69,6 +70,7 @@ test('page has no missing image alt text', async () => {
     await page.goto(pageUrl);
 
     const results = await new AxeBuilder({ page })
+      .setLegacyMode()
       .withRules(['image-alt'])
       .analyze();
 
@@ -96,7 +98,8 @@ test('interactive elements are keyboard-accessible', async () => {
     await page.goto(pageUrl);
 
     const results = await new AxeBuilder({ page })
-      .withRules(['keyboard', 'focus-trap', 'scrollable-region-focusable'])
+      .setLegacyMode()
+      .withTags(['cat.keyboard'])
       .analyze();
 
     // TODO: fix the non-button interactive elements in index.html, then

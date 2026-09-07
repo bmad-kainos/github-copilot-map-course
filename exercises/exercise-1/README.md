@@ -18,10 +18,10 @@ By the end you will have:
 
 | Function | State | How to finish it |
 |----------|-------|------------------|
-| `toTitleCase` | TODO stub | Accept an inline suggestion, then refine |
-| `wordFrequencies` | TODO stub | Describe intent in a comment, let Copilot complete |
+| `toTestCaseTitle` | TODO stub | Accept an inline suggestion, then refine |
+| `tagFrequencies` | TODO stub | Describe intent in a comment, let Copilot complete |
 | `clamp` | TODO stub | Type the signature and accept the first completion |
-| `buggyAverage` | **has a bug** | Select it and run **`/fix`** |
+| `averageTestDurationMs` | **has a bug** | Select it and run **`/fix`** |
 
 ## Steps
 1. Open `starter/utils.ts`.
@@ -35,7 +35,7 @@ By the end you will have:
    (`Cmd/Ctrl+I`).
 5. Not sure what a function should do? Select it and ask **`/explain`** in
    inline chat.
-6. Select `buggyAverage`, open inline chat, and type `/fix`. Review the
+6. Select `averageTestDurationMs`, open inline chat, and type `/fix`. Review the
    proposed change before accepting.
 7. Type-check your work: `npm run typecheck`.
 
@@ -67,4 +67,4 @@ well-defined. You will compare models deliberately in Exercise 3.
 ## Definition of done
 - No `TODO` or `not implemented` markers remain in `starter/utils.ts`.
 - `npm run typecheck` passes with no errors.
-- `buggyAverage` returns a correct average.
+- `averageTestDurationMs` returns a correct average.

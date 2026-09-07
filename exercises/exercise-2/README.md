@@ -9,7 +9,8 @@ record what changed.
 
 ## What you'll work on
 `starter/csv-parser.ts` has three functions that must all end up doing the same
-thing — filter CSV rows where a column equals a value:
+thing — filter a CSV of **test run results** where a column equals a value
+(e.g. `status` = `"failed"`):
 
 | Function | Prompt style |
 |----------|--------------|

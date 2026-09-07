@@ -8,8 +8,9 @@ difference it makes. You'll author `.github/copilot-instructions.md` and watch
 your standards flow into every suggestion.
 
 ## What you'll work on
-`starter/src/index.ts` has a `totalPrice` helper and a `TODO` to add
-`formatCurrency(pence: number): string` returning a GBP string like `"£12.34"`.
+`starter/src/index.ts` has a `totalCiCost` helper (summing each test suite's
+CI compute cost) and a `TODO` to add `formatCurrency(pence: number): string`
+returning a GBP string like `"£12.34"` for a CI cost report.
 
 The catch: **there are no custom instructions yet**. You'll create them.
 

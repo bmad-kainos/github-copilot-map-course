@@ -1,22 +1,23 @@
 /**
- * Exercise 6 — minimal REST API (starter).
+ * Exercise 7 — minimal REST API (starter).
  *
  * A tiny, dependency-free HTTP API built on Node's `http` module so the agent
  * can scaffold a new endpoint, test it, and document it end-to-end.
  *
  * Existing endpoints:
- *   GET  /tasks         -> list all tasks
- *   POST /tasks         -> create a task ({ "title": string })
- *   GET  /tasks/:id     -> fetch one task
+ *   GET  /tests         -> list all test cases
+ *   POST /tests         -> register a test case ({ "name": string })
+ *   GET  /tests/:id     -> fetch one test case
  *
- * The agent-mode task (see TASK.md) is to add DELETE /tasks/:id.
+ * The agent-mode task (see TASK.md) is to add DELETE /tests/:id, for
+ * retiring a test case that's no longer needed.
  */
 import { createServer, type IncomingMessage, type Server, type ServerResponse } from "node:http";
 
-export interface Task {
+export interface TestCase {
   id: number;
-  title: string;
-  done: boolean;
+  name: string;
+  automated: boolean;
 }
 
 function sendJson(res: ServerResponse, status: number, body: unknown): void {
@@ -39,40 +40,40 @@ function readJson(req: IncomingMessage): Promise<unknown> {
 }
 
 export function createApp(): Server {
-  const tasks = new Map<number, Task>();
+  const testCases = new Map<number, TestCase>();
   let nextId = 1;
 
   return createServer(async (req, res) => {
     const url = new URL(req.url ?? "/", "http://localhost");
     const parts = url.pathname.split("/").filter(Boolean);
-    const isTasks = parts[0] === "tasks";
+    const isTests = parts[0] === "tests";
 
-    // GET /tasks
-    if (req.method === "GET" && isTasks && parts.length === 1) {
-      return sendJson(res, 200, [...tasks.values()]);
+    // GET /tests
+    if (req.method === "GET" && isTests && parts.length === 1) {
+      return sendJson(res, 200, [...testCases.values()]);
     }
 
-    // POST /tasks
-    if (req.method === "POST" && isTasks && parts.length === 1) {
-      const body = (await readJson(req)) as { title?: unknown } | null;
-      if (!body || typeof body.title !== "string" || body.title.trim() === "") {
-        return sendJson(res, 400, { error: "title is required" });
+    // POST /tests
+    if (req.method === "POST" && isTests && parts.length === 1) {
+      const body = (await readJson(req)) as { name?: unknown } | null;
+      if (!body || typeof body.name !== "string" || body.name.trim() === "") {
+        return sendJson(res, 400, { error: "name is required" });
       }
-      const task: Task = { id: nextId++, title: body.title, done: false };
-      tasks.set(task.id, task);
-      return sendJson(res, 201, task);
+      const testCase: TestCase = { id: nextId++, name: body.name, automated: false };
+      testCases.set(testCase.id, testCase);
+      return sendJson(res, 201, testCase);
     }
 
-    // GET /tasks/:id
-    if (req.method === "GET" && isTasks && parts.length === 2) {
+    // GET /tests/:id
+    if (req.method === "GET" && isTests && parts.length === 2) {
       const id = Number(parts[1]);
-      const task = tasks.get(id);
-      if (!task) return sendJson(res, 404, { error: `Task ${id} not found` });
-      return sendJson(res, 200, task);
+      const testCase = testCases.get(id);
+      if (!testCase) return sendJson(res, 404, { error: `Test case ${id} not found` });
+      return sendJson(res, 200, testCase);
     }
 
-    // TODO (agent): add DELETE /tasks/:id
-    //   - 204 No Content when the task existed and was removed
+    // TODO (agent): add DELETE /tests/:id
+    //   - 204 No Content when the test case existed and was removed
     //   - 404 { error } when it does not exist
 
     return sendJson(res, 404, { error: "Not found" });
@@ -81,5 +82,5 @@ export function createApp(): Server {
 
 if (import.meta.url === `file://${process.argv[1]}`) {
   const port = Number(process.env.PORT ?? 3000);
-  createApp().listen(port, () => console.log(`Tasks API on http://localhost:${port}`));
+  createApp().listen(port, () => console.log(`Test Case API on http://localhost:${port}`));
 }

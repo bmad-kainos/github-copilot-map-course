@@ -1,37 +1,37 @@
 openapi: 3.0.3
 info:
-  title: Tasks API
+  title: Test Case API
   version: 1.0.0
   description: >
-    Minimal task API for Exercise 6. The agent extends this document when it
-    adds the DELETE /tasks/{id} operation.
+    Minimal test case management API for Exercise 7. The agent extends this
+    document when it adds the DELETE /tests/{id} operation.
 paths:
-  /tasks:
+  /tests:
     get:
-      summary: List all tasks
+      summary: List all test cases
       responses:
         "200":
-          description: An array of tasks
+          description: An array of test cases
     post:
-      summary: Create a task
+      summary: Register a test case
       requestBody:
         required: true
         content:
           application/json:
             schema:
               type: object
-              required: [title]
+              required: [name]
               properties:
-                title:
+                name:
                   type: string
       responses:
         "201":
-          description: The created task
+          description: The registered test case
         "400":
-          description: Missing or invalid title
-  /tasks/{id}:
+          description: Missing or invalid name
+  /tests/{id}:
     get:
-      summary: Fetch a single task
+      summary: Fetch a single test case
       parameters:
         - name: id
           in: path
@@ -40,18 +40,18 @@ paths:
             type: integer
       responses:
         "200":
-          description: The task
+          description: The test case
         "404":
-          description: Task not found
-    # TODO (agent): document the DELETE /tasks/{id} operation here.
+          description: Test case not found
+    # TODO (agent): document the DELETE /tests/{id} operation here.
 components:
   schemas:
-    Task:
+    TestCase:
       type: object
       properties:
         id:
           type: integer
-        title:
+        name:
           type: string
-        done:
+        automated:
           type: boolean

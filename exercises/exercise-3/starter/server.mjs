@@ -1,4 +1,4 @@
-// Minimal static file server for the sample login app.
+// Minimal static file server for the Kainos Shop login page.
 // Playwright starts this automatically via playwright.config.ts (webServer).
 import { createServer } from "node:http";
 import { readFile } from "node:fs/promises";
@@ -28,5 +28,5 @@ const server = createServer(async (req, res) => {
 });
 
 server.listen(port, () => {
-  console.log(`Sample login app running at http://localhost:${port}`);
+  console.log(`Kainos Shop login page running at http://localhost:${port}`);
 });

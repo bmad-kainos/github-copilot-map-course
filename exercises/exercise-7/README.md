@@ -8,17 +8,19 @@ scaffolding an endpoint, testing it, and documenting it — while you supervise
 the plan and the diffs.
 
 ## What you'll work on
-`starter/` is a tiny dependency-free REST API (`src/app.ts`) with:
+`starter/` is a tiny dependency-free REST API (`src/app.ts`) for managing test
+cases:
 
-- `GET /tasks` · `POST /tasks` · `GET /tasks/:id`
+- `GET /tests` · `POST /tests` · `GET /tests/:id`
 
-Your task (see **`starter/TASK.md`**): add **`DELETE /tasks/:id`**, end-to-end.
+Your task (see **`starter/TASK.md`**): add **`DELETE /tests/:id`** to retire a
+test case, end-to-end.
 
 ## Steps
 1. Open `starter/` and read `TASK.md` — it's the single source of truth for the
    agent prompt.
 2. In **Agent Mode**, give one prompt that asks the agent to:
-   - add the `DELETE /tasks/:id` handler in `src/app.ts` (`204` on success,
+   - add the `DELETE /tests/:id` handler in `src/app.ts` (`204` on success,
      `404` when missing);
    - add tests in `tests/api.test.ts`;
    - document the operation in `openapi.yaml` (the `delete:` block);
@@ -43,10 +45,10 @@ across several files and keep them consistent.
 - Still your code: read the diff before accepting. You own what you merge.
 
 ## Definition of done
-- `src/app.ts` handles `DELETE /tasks/:id` (204 / 404).
+- `src/app.ts` handles `DELETE /tests/:id` (204 / 404).
 - `tests/api.test.ts` covers delete-existing and delete-unknown; `npm test`
   passes.
-- `openapi.yaml` documents the `delete:` operation under `/tasks/{id}`.
+- `openapi.yaml` documents the `delete:` operation under `/tests/{id}`.
 
 ---
 Works identically in a **GitHub Codespace** or **locally in VS Code**.

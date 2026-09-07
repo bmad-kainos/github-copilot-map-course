@@ -19,21 +19,37 @@ By the end you will have:
 > This exercise focuses on accessibility only; explore the others yourself
 > once you're comfortable with the pattern.
 
+> **App under test:** `starter/app/index.html` is a working page from
+> **Kainos Shop** — the same fictional shop app used in Exercise 3 — with
+> deliberate accessibility issues (bad locators/markup, contrast, missing
+> labels) layered on top. It is functionally fine; axe-core is flagging
+> *usability* defects, not broken features.
+>
+> **Kainos Shop is not one shared codebase.** This exercise ships its own
+> self-contained copy of the app, independent of Exercise 3 — see "Running
+> this exercise" below for the exact commands for *this* copy.
+
 ## What you'll work on
 
 | File | Purpose |
 |------|---------|
-| `starter/app/index.html` | Sample shop page — contains deliberate accessibility issues |
+| `starter/app/index.html` | Kainos Shop product page — contains deliberate accessibility issues |
 | `starter/tests/accessibility.test.ts` | axe-core harness (partially complete) |
+
+## Running this exercise
+This exercise's copy of Kainos Shop is entirely self-contained under
+`exercises/exercise-5/starter/`. To run it locally:
+```
+npm install --workspace=exercises/exercise-5/starter
+npm run test:install --workspace=exercises/exercise-5/starter
+npm test --workspace=exercises/exercise-5/starter
+```
 
 ## Steps
 
 ### Part 1 — Run the accessibility tests and understand the output (~10 min)
-1. Install dependencies and Playwright browsers:
-   ```
-   npm run test:install --workspace=exercises/exercise-5/starter
-   npm install --workspace=exercises/exercise-5/starter
-   ```
+1. Install dependencies and Playwright browsers (see "Running this exercise"
+   above if you haven't already).
 2. Run the tests — they will fail:
    ```
    npm test --workspace=exercises/exercise-5/starter

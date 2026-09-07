@@ -2,8 +2,8 @@
  * Exercise 2 — Effective Prompting kata.
  *
  * The task is the SAME for all three attempts:
- *   Parse a CSV string and return only the rows where a given column
- *   matches a given value.
+ *   Parse a CSV of test run results and return only the rows where a given
+ *   column matches a given value (e.g. status = "failed").
  *
  * Solve it three times with increasing prompt quality, then record your
  * observations in RESULTS.md.
@@ -54,8 +54,8 @@ export function filterCsvAttempt2(
  * @param value  - The exact value the column must equal.
  * @returns The matching rows as objects keyed by header name.
  * @example
- *   filterCsvAttempt3("name,role\nAda,eng\nGrace,eng", "role", "eng")
- *   // => [{ name: "Ada", role: "eng" }, { name: "Grace", role: "eng" }]
+ *   filterCsvAttempt3("testName,status\nlogin test,passed\ncheckout test,failed", "status", "failed")
+ *   // => [{ testName: "checkout test", status: "failed" }]
  */
 export function filterCsvAttempt3(
   csv: string,

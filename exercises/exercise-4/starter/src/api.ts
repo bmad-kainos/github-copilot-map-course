@@ -1,72 +1,72 @@
 /**
- * Exercise 4 — In-memory Task API (starter).
+ * Exercise 4 — In-memory Test Case API (starter).
  *
  * A tiny, framework-free service so the exercise stays self-contained.
- * Each method represents an API operation.
+ * Each method represents an operation a test-case manager would expose.
  *
- * Your job: add the missing `completeTask` operation, test-first.
+ * Your job: add the missing `markTestCasePassed` operation, test-first.
  */
 
-export interface Task {
+export interface TestCase {
   id: number;
-  title: string;
-  done: boolean;
+  name: string;
+  passed: boolean;
 }
 
-/** Thrown when an operation references a task id that does not exist. */
-export class TaskNotFoundError extends Error {
+/** Thrown when an operation references a test case id that does not exist. */
+export class TestCaseNotFoundError extends Error {
   constructor(id: number) {
-    super(`Task ${id} not found`);
-    this.name = "TaskNotFoundError";
+    super(`Test case ${id} not found`);
+    this.name = "TestCaseNotFoundError";
   }
 }
 
-export class TaskApi {
-  private tasks = new Map<number, Task>();
+export class TestRunApi {
+  private testCases = new Map<number, TestCase>();
   private nextId = 1;
 
   /**
-   * Create a new task.
+   * Register a new test case.
    *
-   * @param title - Human-readable task title.
-   * @returns The newly created task, including its generated id.
+   * @param name - Human-readable test case name.
+   * @returns The newly registered test case, including its generated id.
    */
-  createTask(title: string): Task {
-    const task: Task = { id: this.nextId++, title, done: false };
-    this.tasks.set(task.id, task);
-    return task;
+  registerTestCase(name: string): TestCase {
+    const testCase: TestCase = { id: this.nextId++, name, passed: false };
+    this.testCases.set(testCase.id, testCase);
+    return testCase;
   }
 
   /**
-   * List all tasks in insertion order.
+   * List all test cases in insertion order.
    *
-   * @returns An array of every task currently stored.
+   * @returns An array of every test case currently stored.
    */
-  listTasks(): Task[] {
-    return [...this.tasks.values()];
+  listTestCases(): TestCase[] {
+    return [...this.testCases.values()];
   }
 
   /**
-   * Fetch a single task by id.
+   * Fetch a single test case by id.
    *
-   * @param id - The id of the task to retrieve.
-   * @returns The matching task.
-   * @throws {TaskNotFoundError} If no task has the given id.
+   * @param id - The id of the test case to retrieve.
+   * @returns The matching test case.
+   * @throws {TestCaseNotFoundError} If no test case has the given id.
    */
-  getTask(id: number): Task {
-    const task = this.tasks.get(id);
-    if (!task) {
-      throw new TaskNotFoundError(id);
+  getTestCase(id: number): TestCase {
+    const testCase = this.testCases.get(id);
+    if (!testCase) {
+      throw new TestCaseNotFoundError(id);
     }
-    return task;
+    return testCase;
   }
 
   // ---------------------------------------------------------------
-  // TODO: implement completeTask
+  // TODO: implement markTestCasePassed
   //
-  // completeTask(id: number): Task should mark the matching task as
-  // done (done = true) and return it, throwing TaskNotFoundError when
-  // the id does not exist.
+  // markTestCasePassed(id: number): TestCase should mark the matching
+  // test case as passed (passed = true) and return it, throwing
+  // TestCaseNotFoundError when the id does not exist.
   //
   // Follow the workflow in the exercise README:
   //   1. Write a failing test in tests/api.test.ts first (/tests)

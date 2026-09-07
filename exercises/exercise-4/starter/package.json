@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "private": true,
   "type": "module",
-  "description": "Exercise 4 \u2014 TDD workflow starter (in-memory Task API)",
+  "description": "Exercise 4 \u2014 TDD workflow starter (in-memory Test Case API)",
   "scripts": {
     "test": "node --import tsx --test tests/api.test.ts",
     "summary": "node --import tsx scripts/run-summary.ts",

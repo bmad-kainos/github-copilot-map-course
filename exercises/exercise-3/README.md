@@ -11,8 +11,14 @@ This is the heart of the **MAP** idea — **M**odel · **A**pproach · **P**romp
 picking the right model is a skill, not a default.
 
 ## The task (same for every model)
-Complete a Playwright page object and two end-to-end tests for a tiny login
-page:
+Complete a Playwright page object and two end-to-end tests for the sign-in
+page of **Kainos Shop** — a small fictional shop app used across this course
+(you'll audit its product page for accessibility in Exercise 5).
+
+> **Kainos Shop is not one shared codebase.** Each exercise ships its own
+> self-contained copy of the app, so this exercise and Exercise 5 run
+> completely independently — see "Running this exercise" below for the exact
+> commands for *this* copy.
 
 - `starter/pages/LoginPage.ts` — fill in `goto`, `login`, `welcomeMessage`,
   `errorMessage`.
@@ -45,8 +51,17 @@ matching the deck's bake-off:
 4. Reset the files. **Run 3 — a Reasoning model.**
 5. Fill in `RESULTS.md` with each run and a final **verdict** (which tier you'd
    reach for day-to-day, and when it's worth stepping up).
-6. (Optional, local) Actually run the tests:
-   `npm run test:install --workspace=exercises/exercise-3/starter && npm test --workspace=exercises/exercise-3/starter`.
+
+## Running this exercise
+This exercise's copy of Kainos Shop is entirely self-contained under
+`exercises/exercise-3/starter/`. To run it locally:
+```
+npm install --workspace=exercises/exercise-3/starter
+npm run test:install --workspace=exercises/exercise-3/starter
+npm test --workspace=exercises/exercise-3/starter
+```
+Playwright starts `server.mjs` for you automatically (via the `webServer`
+config) — you don't need to run it separately.
 
 ## Copilot features practised
 - The **model picker** and understanding tiers

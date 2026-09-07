@@ -1,5 +1,5 @@
 /**
- * Exercise 5 — Customisation starter.
+ * Exercise 6 — Customisation starter.
  *
  * This project intentionally has NO custom instructions of its own.
  * You will create `.github/copilot-instructions.md` at the repo root,
@@ -7,13 +7,13 @@
  * Copilot's suggestions.
  */
 
-export interface Product {
+export interface TestSuite {
   name: string;
-  priceInPence: number;
+  ciCostInPence: number;
 }
 
-export function totalPrice(products: Product[]): number {
-  return products.reduce((sum, p) => sum + p.priceInPence, 0);
+export function totalCiCost(suites: TestSuite[]): number {
+  return suites.reduce((sum, s) => sum + s.ciCostInPence, 0);
 }
 
 // TODO: add a formatCurrency function
@@ -22,9 +22,9 @@ export function totalPrice(products: Product[]): number {
 // string like "£12.34". Notice how your instructions influence the result.
 
 if (import.meta.url === `file://${process.argv[1]}`) {
-  const basket: Product[] = [
-    { name: "Sticker pack", priceInPence: 499 },
-    { name: "Mug", priceInPence: 1299 },
+  const suites: TestSuite[] = [
+    { name: "smoke", ciCostInPence: 499 },
+    { name: "regression", ciCostInPence: 1299 },
   ];
-  console.log("Total (pence):", totalPrice(basket));
+  console.log("Total CI cost (pence):", totalCiCost(suites));
 }

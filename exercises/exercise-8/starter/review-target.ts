@@ -1,5 +1,5 @@
 /**
- * Exercise 7 — review target.
+ * Exercise 8 — review target.
  *
  * This file contains DELIBERATE security and quality issues (OWASP Top 10
  * flavours) for your custom `code-reviewer` agent to find. Do NOT ship this.

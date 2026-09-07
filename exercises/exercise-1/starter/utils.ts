@@ -9,29 +9,31 @@
  */
 
 /**
- * Return `text` with the first letter of each word capitalised.
+ * Turn a raw test identifier into a readable title: replace underscores
+ * with spaces and capitalise the first letter of each word.
  *
- * @example toTitleCase("hello world") // => "Hello World"
+ * @example toTestCaseTitle("login_test_invalid_password") // => "Login Test Invalid Password"
  */
-export function toTitleCase(text: string): string {
+export function toTestCaseTitle(rawName: string): string {
   // TODO: implement
   throw new Error("not implemented");
 }
 
 /**
- * Count how many times each word appears in `words`.
+ * Count how many times each tag appears across a set of test cases.
  *
- * @example wordFrequencies(["a", "b", "a"]) // => { a: 2, b: 1 }
+ * @example tagFrequencies(["smoke", "regression", "smoke"]) // => { smoke: 2, regression: 1 }
  */
-export function wordFrequencies(words: string[]): Record<string, number> {
+export function tagFrequencies(tags: string[]): Record<string, number> {
   // TODO: implement
   throw new Error("not implemented");
 }
 
 /**
- * Constrain `value` to the inclusive range [`low`, `high`].
+ * Constrain `value` to the inclusive range [`low`, `high`] — useful for
+ * capping a retry count to a sane maximum.
  *
- * @example clamp(12, 0, 10) // => 10
+ * @example clamp(12, 0, 3) // => 3
  */
 export function clamp(value: number, low: number, high: number): number {
   // TODO: implement
@@ -39,23 +41,23 @@ export function clamp(value: number, low: number, high: number): number {
 }
 
 /**
- * Return the arithmetic mean of `numbers`.
+ * Return the average duration (in ms) across a set of test runs.
  *
  * NOTE: This function contains a deliberate bug for the `/fix` exercise.
  * Select it in the editor and run `/fix` in Copilot Chat or Cmd+I and type `/fix`.
  */
-export function buggyAverage(numbers: number[]): number {
+export function averageTestDurationMs(durationsMs: number[]): number {
   let total = 0;
-  for (const n of numbers) {
+  for (const n of durationsMs) {
     total += n;
   }
   // Bug: dividing by the wrong value
-  return total / (numbers.length - 1);
+  return total / (durationsMs.length - 1);
 }
 
 if (import.meta.url === `file://${process.argv[1]}`) {
-  console.log("toTitleCase:", toTitleCase("hello copilot"));
-  console.log("wordFrequencies:", wordFrequencies(["a", "b", "a", "c", "b", "a"]));
-  console.log("clamp:", clamp(42, 0, 10));
-  console.log("buggyAverage:", buggyAverage([2, 4, 6]));
+  console.log("toTestCaseTitle:", toTestCaseTitle("login_test_invalid_password"));
+  console.log("tagFrequencies:", tagFrequencies(["smoke", "regression", "smoke", "e2e", "regression", "smoke"]));
+  console.log("clamp:", clamp(42, 0, 3));
+  console.log("averageTestDurationMs:", averageTestDurationMs([2000, 4000, 6000]));
 }
